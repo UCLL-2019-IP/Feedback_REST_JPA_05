@@ -1,0 +1,16 @@
+*********************************************************************************
+* This is purely informational, has nothing to do with running the application! *
+*********************************************************************************
+
+"jdbc:h2:mem:testdb" is the default h2 database created by spring boot.
+
+SELECT *
+FROM topic
+INNER JOIN feedback
+ON topic_id = feedback_topic_id;
+
+SELECT *
+FROM (
+(topic INNER JOIN topic_info ON topic.topic_id = topic_info.topic_info_id)
+INNER JOIN feedback ON topic.topic_id  = feedback.feedback_topic_id
+);

@@ -1,0 +1,93 @@
+// ################################################################
+// Build script build block.
+// Used to configure the classpath for the build script itself.
+// ################################################################
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE")
+    }
+}
+
+
+// ################################################################
+// Plugins.
+// ################################################################
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+
+// ################################################################
+// Name and version of the jar to build (running the bootjar task).
+// ################################################################
+
+bootJar {
+    baseName = 'feedback-jpa-03'
+    version =  '0.1.0'
+}
+
+
+// ################################################################
+// Dependencies are retrieved from repositories.
+// ################################################################
+
+repositories {
+    mavenCentral()
+    // alternative:
+    // jcenter()
+}
+
+
+// ################################################################
+// Properties.
+// ################################################################
+
+group 'Feedback_REST'
+version = '1.0.0-SNAPSHOT' // default is empty
+// a java project adds properties of its own:
+sourceCompatibility = 1.8 // version to use when compiling source
+// version to use when generating the compiled class files,
+// default same as sourceCompatibility ( so you can usually omit it)
+targetCompatibility = 1.8
+
+
+// ################################################################
+// Dependencies - project dependencies are declared within 
+// this script block.
+/*
+Individual dependencies are grouped into configurations:
+    - compile: specifies the classes needed to compile the production source
+    - runtime: enumerates the dependencies needed to run the production source 
+        (these include those in the compile configuration)
+    - testcompile: specifies the classes needed to compile the test source 
+        (by default, the compile dependencies are used to compile the test source)
+    - testruntime: needed to run the tests (by default: includes the previous 3)
+
+Not always version property, because the spring boot gradle plugin utilizes the 
+dependency management plugin to automatically determine the correct version, 
+managed by the spring boot bill of materials (aka BOM).
+*/
+// ################################################################
+
+dependencies {
+    // needed for Spring Boot -> includes embedded tomcat
+    compile("org.springframework.boot:spring-boot-starter-web")
+
+    // needed for JPA
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile('mysql:mysql-connector-java:8.0.13')
+    // needed for in-memory database
+    compile("com.h2database:h2")
+
+    // use actuator
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+
+    // for testing
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
