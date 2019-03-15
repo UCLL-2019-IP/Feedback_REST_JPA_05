@@ -1,6 +1,7 @@
 package be.ucll.feedback.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -46,6 +47,7 @@ public class Comment {
     @JoinColumn (name = "top_comment_id")
     // need this to prevent endless loop!
     @JsonBackReference // the back part of the reference – will be omitted from serialization
+    // @JsonIgnore // -> this also works, instead of @JsonBackReference !!!!
     private Comment topComment;
     // add getter & setter
     public Comment getTopComment() { return topComment; }
@@ -55,6 +57,7 @@ public class Comment {
     @OneToMany (mappedBy = "topComment", cascade = CascadeType.ALL, orphanRemoval = true)
     // need this to prevent endless loop!
     @JsonManagedReference // the forward part of the reference – gets serialized normally
+    // @JsonIgnore // -> this also works, instead of @JsonManagedReference !!!!
     private List<Comment> commentList = new ArrayList<Comment>();
     // add getter & setter for list
     public List<Comment> getCommentList() { return commentList; }
