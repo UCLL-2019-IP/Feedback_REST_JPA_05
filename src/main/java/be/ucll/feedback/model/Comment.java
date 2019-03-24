@@ -39,7 +39,6 @@ public class Comment {
     public void setFeedbackId(int feedbackId) { this.feedbackId = feedbackId; }
 
 
-
     /*
     This is recursive! Each comment can have comments of its own, ad infinitum.
     */
@@ -67,7 +66,6 @@ public class Comment {
     /*
     End of recursive stuff
      */
-
 
 
     // no-args Constructor, always necessary!
