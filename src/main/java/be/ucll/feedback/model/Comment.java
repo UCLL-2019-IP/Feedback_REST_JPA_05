@@ -43,7 +43,8 @@ public class Comment {
     /*
     This is recursive! Each comment can have comments of its own, ad infinitum.
     */
-    @ManyToOne (cascade = CascadeType.ALL)
+    //@ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn (name = "top_comment_id")
     // need this to prevent endless loop!
     @JsonBackReference // the back part of the reference – will be omitted from serialization
