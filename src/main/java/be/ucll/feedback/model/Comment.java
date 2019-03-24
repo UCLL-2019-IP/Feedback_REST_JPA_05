@@ -43,7 +43,8 @@ public class Comment {
     /*
     This is recursive! Each comment can have comments of its own, ad infinitum.
     */
-    //@ManyToOne (cascade = CascadeType.ALL)
+    // Changed CascadeType.ALL to the set of {CascadeType.PERSIST, CascadeType.MERGE},
+    // this prevents too much deleting, now it works as it should.
     @ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn (name = "top_comment_id")
     // need this to prevent endless loop!
